@@ -44,3 +44,9 @@ for i in range(len(embeddings)):
 #         elif i > j: # Copy the uper triangle to the lower triangle
 #             l2_dist_manual_improved[i,j] = l2_dist_manual[j,i]
 print(f"Distances:\n{l2_dist_manual}")
+
+
+l2_dist_scipy = scipy.spatial.distance.cdist(embeddings, embeddings, 'euclidean')
+print(f"let's have a quick look at l2_dist_scipy: {l2_dist_scipy}")
+
+print(f"The following verifies that l2_dist_manual and l2_dist_scipy are identical: \n{np.allclose(l2_dist_manual, l2_dist_scipy)}")

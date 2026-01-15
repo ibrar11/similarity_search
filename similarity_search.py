@@ -57,6 +57,20 @@ def perform_similarity_search(collection, all_items):
         )
         print(f"Query results for '{query_term}':")
         print(results)
+
+        if not results or not results['ids'] or len(results['ids'][0]) == 0:
+            print(f'No documents found similar to "{query_term}"')
+            return
+        
+        print(f'Top 3 similar documents to "{query_term}":')
+        for i in range(min(3, len(results['ids'][0]))):
+            doc_id = results['ids'][0][i]
+            score = results['distances'][0][i]
+            text = results['documents'][0][i]
+            if not text:
+                print(f' - ID: {doc_id}, Text: "Text not available", Score: {score:.4f}')
+            else:
+                print(f' - ID: {doc_id}, Text: "{text}", Score: {score:.4f}')
     except Exception as error:
         print(f"Error in similarity search: {error}")
 

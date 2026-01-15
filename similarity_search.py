@@ -44,8 +44,21 @@ def main():
         all_items = collection.get()
         print("Collection contents:")
         print(f"Number of documents: {len(all_items['documents'])}")
+        perform_similarity_search(collection,all_items)
     except Exception as error:  # Catch any errors and log them to the console
         print(f"Error: {error}")
+
+def perform_similarity_search(collection, all_items):
+    try:
+        query_term = "apple"
+        results = collection.query(
+            query_texts=[query_term],
+            n_results=3
+        )
+        print(f"Query results for '{query_term}':")
+        print(results)
+    except Exception as error:
+        print(f"Error in similarity search: {error}")
 
 if __name__ == "__main__":
     main()

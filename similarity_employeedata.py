@@ -173,5 +173,28 @@ def main():
                 "employment_type": "Full-time"
             },
         ]
+        employee_documents = []
+        for employee in employees:
+            document = f"{employee['role']} with {employee['experience']} years of experience in {employee['department']}. "
+            document += f"Skills: {employee['skills']}. Located in {employee['location']}. "
+            document += f"Employment type: {employee['employment_type']}."
+            employee_documents.append(document)
+
+        collection.add(
+            ids=[employee["id"] for employee in employees],
+            documents=employee_documents,
+            metadatas=[{
+                "name": employee["name"],
+                "department": employee["department"],
+                "role": employee["role"],
+                "experience": employee["experience"],
+                "location": employee["location"],
+                "employment_type": employee["employment_type"]
+            } for employee in employees]
+        )
+
+        all_items = collection.get()
+        print("Collection contents:")
+        print(f"Number of documents: {len(all_items['documents'])}")
     except Exception as error:
         print(f"Error: {error}")
